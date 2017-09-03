@@ -23,7 +23,26 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mWebView = new WebView(this){
+            @Override
+            public boolean dispatchKeyEvent(KeyEvent event) {
+                switch (event.getKeyCode()) {
 
+                    case KeyEvent.KEYCODE_BACK:
+                        if (mWebView.canGoBack()) {
+                            mWebView.goBack();
+                        } else {
+                            onBackPressed();
+                        }
+                        break;
+                    default:
+
+                        break;
+
+                }
+                return super.dispatchKeyEvent(event);
+            }
+        };
         mWebView.getSettings().setJavaScriptEnabled(true);
 
         mWebView.setBackgroundColor(Color.TRANSPARENT);
