@@ -2,6 +2,7 @@ package com.colingo.webview;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 
@@ -25,7 +26,8 @@ public class ShowWebViewActivity extends Activity {
         mWebView.getSettings().setUseWideViewPort(true);
 
         mWebView.setWebChromeClient(new WebChromeClient());
-        mWebView.loadUrl("http://gw.cs.cn/jx.html");
+        mWebView.loadUrl("http://gw.cs.cn/jx.php");
+
     }
 
     // Prevent the back-button from closing the app
@@ -36,5 +38,22 @@ public class ShowWebViewActivity extends Activity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (event.getAction() == KeyEvent.ACTION_DOWN) {
+            switch (keyCode) {
+                case KeyEvent.KEYCODE_BACK:
+                    if (mWebView.canGoBack()) {
+                        mWebView.goBack();
+                    } else {
+                        finish();
+                    }
+                    return true;
+            }
+
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }
