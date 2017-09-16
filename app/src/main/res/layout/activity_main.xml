@@ -22,7 +22,6 @@
         android:layout_marginBottom="20.0dip"
         android:layout_marginLeft="20.0dip"
         android:contentDescription="@null"
-        android:onClick="showWebView"
         android:src="@drawable/ic_launcher"/>
 
     <ToggleButton

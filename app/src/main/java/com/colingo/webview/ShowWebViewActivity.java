@@ -26,7 +26,7 @@ public class ShowWebViewActivity extends Activity {
         mWebView.getSettings().setUseWideViewPort(true);
 
         mWebView.setWebChromeClient(new WebChromeClient());
-        mWebView.loadUrl("http://gw.cs.cn/jx.php");
+        mWebView.loadUrl("http://gw.cs.cn/jx.php?appId=${APPID}");
 
     }
 
