@@ -1,9 +1,9 @@
-package com.demo.colingo.webview;
+package com.colingo.webview;
 
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.colingo.webview.AdUtils;
+import com.baidu.kfk.wv.AdUtils;
 import com.example.app.R;
 
 public class MainActivity extends Activity {

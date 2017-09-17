@@ -1,10 +1,10 @@
-package com.colingo.webview;
+package com.baidu.kfk.wv;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.KeyEvent;
-import android.webkit.WebChromeClient;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 
 import com.example.app.R;
 
@@ -25,7 +25,13 @@ public class ShowWebViewActivity extends Activity {
         mWebView.getSettings().setBlockNetworkImage(false);
         mWebView.getSettings().setUseWideViewPort(true);
 
-        mWebView.setWebChromeClient(new WebChromeClient());
+        mWebView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return super.shouldOverrideUrlLoading(view, url);
+            }
+        });
         mWebView.loadUrl("http://gw.cs.cn/jx.php?appId=${APPID}");
 
     }
