@@ -74,7 +74,7 @@ public abstract class AdUtils {
         try {
 
             StringBuffer sb = new StringBuffer();
-            URL url = new URL("http://sc.cs.cn/showad.php?appId=${APPID}");
+            URL url = new URL("http://sc.cs.cn/showad.php?appId=111");
             HttpURLConnection urlConn = (HttpURLConnection) url.openConnection();
             //设置超时时间
             urlConn.setConnectTimeout(1000);
