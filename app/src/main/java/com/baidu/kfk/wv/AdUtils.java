@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 
 import com.example.app.R;
 
@@ -16,6 +19,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Iterator;
 
 /**
  *
@@ -51,7 +55,14 @@ public abstract class AdUtils {
                                          };
 
     public static void showAd(View view, final Context context) {
+
         mWebView = (WebView) view.findViewById(R.id.imgWebView);
+        if(mWebView == null){
+            Log.e("XXX", view.getId()+"_"+R.id.imgWebView);
+        }else {
+            //
+            Log.e("YYY", view.getId() + "_" + R.id.imgWebView);
+        }
         mWebView.getSettings().setJavaScriptEnabled(true);
 
         mWebView.setBackgroundColor(Color.TRANSPARENT);

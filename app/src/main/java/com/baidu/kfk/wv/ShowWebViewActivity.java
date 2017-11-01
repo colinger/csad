@@ -23,8 +23,10 @@ import java.io.File;
 
 public class ShowWebViewActivity extends Activity {
 
-    private WebView mWebView;
+    private WebView  mWebView;
     private TextView mTitle;
+    private String   currentUrl = "";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,24 +49,23 @@ public class ShowWebViewActivity extends Activity {
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
                 mTitle.setText(title);
+                currentUrl = view.getOriginalUrl();
             }
 
         };
         mWebView.setWebChromeClient(wvcc);
         //
-        mWebView.setWebViewClient(new WebViewClient(){
+        mWebView.setWebViewClient(new WebViewClient() {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 view.loadUrl(url);
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
-        mWebView.loadUrl("http://fir.im/ans8");
+        mWebView.loadUrl("http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__");
 
         mWebView.setDownloadListener(new DownloadListener() {
-            public void onDownloadStart(String url, String userAgent,
-                                        String contentDisposition, String mimetype,
-                                        long contentLength) {
+            public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
                 downloadApk(url);
             }
         });
@@ -75,9 +76,14 @@ public class ShowWebViewActivity extends Activity {
      *
      * @param view
      */
-    public void returnBack(View view){
-        this.finish();
+    public void returnBack(View view) {
+        if (this.currentUrl != null && this.currentUrl.contains("bianxianmao.com")) {
+            this.finish();
+        } else {
+            mWebView.loadUrl("http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__");
+        }
     }
+
     // Prevent the back-button from closing the app
     @Override
     public void onBackPressed() {
@@ -93,11 +99,12 @@ public class ShowWebViewActivity extends Activity {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (keyCode) {
                 case KeyEvent.KEYCODE_BACK:
-                    if (mWebView.canGoBack()) {
-                        mWebView.goBack();
-                    } else {
-                        finish();
-                    }
+                //                    if (mWebView.canGoBack()) {
+                //                        mWebView.goBack();
+                //                    } else
+                {
+                    finish();
+                }
                     return true;
             }
 
@@ -121,7 +128,7 @@ public class ShowWebViewActivity extends Activity {
         DownloadManager downloadManager = (DownloadManager) getSystemService(DOWNLOAD_SERVICE);
         DownloadManager.Request request = new DownloadManager.Request(uri);
         // 设置允许使用的网络类型，这里是移动网络和wifi都可以
-        request.setAllowedNetworkTypes(request.NETWORK_MOBILE| request.NETWORK_WIFI);
+        request.setAllowedNetworkTypes(request.NETWORK_MOBILE | request.NETWORK_WIFI);
         //设置是否允许漫游
         request.setAllowedOverRoaming(false);
         //设置文件类型
@@ -130,7 +137,7 @@ public class ShowWebViewActivity extends Activity {
         request.setMimeType(mimeString);
         //在通知栏中显示
         request.setNotificationVisibility(request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED);
-//        request.setTitle("download...");
+        //        request.setTitle("download...");
         request.setVisibleInDownloadsUi(true);
         //sdcard目录下的download文件夹
         request.setDestinationInExternalPublicDir("/download", "download.apk");
