@@ -13,6 +13,7 @@ import android.view.View;
 import android.webkit.DownloadListener;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TextView;
@@ -21,13 +22,13 @@ import com.example.app.R;
 
 import java.io.File;
 
-public class ShowWebViewActivity extends Activity {
+public class ShowWebViewActivityBak extends Activity {
 
     private WebView  mWebView;
     private TextView mTitle;
     private String   currentUrl = "";
+    private int      counter    = 0;
 
-    private String AD_URL = "http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,14 +64,14 @@ public class ShowWebViewActivity extends Activity {
                 return super.shouldOverrideUrlLoading(view, url);
             }
         });
-        mWebView.loadUrl(AD_URL);
+        mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
+        mWebView.loadUrl("http://newapp.hlyy.cc/bs/sctv1.html");
 
         mWebView.setDownloadListener(new DownloadListener() {
             public void onDownloadStart(String url, String userAgent, String contentDisposition, String mimetype, long contentLength) {
                 downloadApk(url);
             }
         });
-
     }
 
     /***
@@ -78,10 +79,11 @@ public class ShowWebViewActivity extends Activity {
      * @param view
      */
     public void returnBack(View view) {
-        if (this.currentUrl != null && this.currentUrl.contains("bianxianmao.com")) {
+        if ((this.currentUrl != null && this.currentUrl.contains("bianxianmao.com")) || counter == 1) {
             this.finish();
         } else {
-            mWebView.loadUrl(AD_URL);
+            mWebView.loadUrl("http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__");
+            this.counter = 1;
         }
     }
 
@@ -93,6 +95,12 @@ public class ShowWebViewActivity extends Activity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        this.counter = 0;
     }
 
     @Override
@@ -153,4 +161,5 @@ public class ShowWebViewActivity extends Activity {
             installApk();
         }
     };
+
 }

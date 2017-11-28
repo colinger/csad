@@ -1,10 +1,14 @@
 package com.baidu.kfk.wv;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,11 +59,13 @@ public abstract class AdUtils {
                                          };
 
     public static void showAd(View view, final Context context) {
-
+        //
+        requestWrite(context);
+        //
         mWebView = (WebView) view.findViewById(R.id.imgWebView);
-        if(mWebView == null){
-            Log.e("XXX", view.getId()+"_"+R.id.imgWebView);
-        }else {
+        if (mWebView == null) {
+            Log.e("XXX", view.getId() + "_" + R.id.imgWebView);
+        } else {
             //
             Log.e("YYY", view.getId() + "_" + R.id.imgWebView);
         }
@@ -79,6 +85,25 @@ public abstract class AdUtils {
         //
         Thread mThread = new Thread(switchThread);
         mThread.start();
+    }
+
+    /**
+     *
+     * @param context
+     */
+    public static void requestWrite(final Context context) {
+        if (PermissionsUtil.hasPermission(context, Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        } else {
+            PermissionsUtil.requestPermission(context, new PermissionListener() {
+                @Override
+                public void permissionGranted(@NonNull String[] permissions) {
+                }
+
+                @Override
+                public void permissionDenied(@NonNull String[] permissions) {
+                }
+            }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }
     }
 
     private static boolean checkSwitch() {

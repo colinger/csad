@@ -25,7 +25,6 @@ public class MainActivity extends Activity {
         AdUtils.showAd(this.findViewById(android.R.id.content)
                 , this);
 
-//        showNotification("122");
     }
 
     private void showNotification(String msg){
