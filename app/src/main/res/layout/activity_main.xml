@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="fill_parent"
-             android:layout_height="fill_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                tools:context="com.colingo.webview.MainActivity">
 
-    <RelativeLayout  android:layout_width="fill_parent" android:layout_height="fill_parent"
-                    xmlns:android="http://schemas.android.com/apk/res/android">
-        <ImageView  android:layout_width="215.0dip" android:layout_height="240.0dip" android:layout_marginTop="59.0dip" android:layout_centerHorizontal="true" />
-        <RelativeLayout android:layout_width="fill_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
-            <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="43.0dip" android:layout_marginBottom="20.0dip" android:layout_above="@+id/view1" android:layout_centerHorizontal="true">
-                <ImageView  android:layout_width="121.5dip" android:layout_height="fill_parent" />
-                <View android:background="#ffffffff" android:layout_width="1.0dip" android:layout_height="fill_parent" android:layout_marginLeft="10.0dip" android:layout_marginRight="10.0dip" />
-                <TextView android:textSize="18.0sp" android:textColor="#ffffffff" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="xxx" />
-            </LinearLayout>
-            <View android:id="@+id/view1" android:layout_width="wrap_content" android:layout_height="0.0dip" android:layout_alignParentBottom="true" />
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <WebView
-        android:id="@+id/imgWebView"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_gravity="right|center_vertical" android:visibility="gone" android:scrollbars="none"/>
-</FrameLayout>
+    <Button
+        android:id="@+id/btn_start_scan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="开启扫一扫" />
+</RelativeLayout>
