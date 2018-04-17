@@ -11,6 +11,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
@@ -56,7 +57,11 @@ public class CSAdDetailActivity extends AppCompatActivity {
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setBlockNetworkImage(false);
         mWebView.getSettings().setUseWideViewPort(true);
-
+        //
+        String adUrl = getIntent().getStringExtra("adUrl");
+        if (!TextUtils.isEmpty(adUrl)) {
+            AD_URL = adUrl;
+        }
         WebChromeClient wvcc = new WebChromeClient() {
             @Override
             public void onReceivedTitle(WebView view, String title) {

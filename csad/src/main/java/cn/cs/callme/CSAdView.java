@@ -1,121 +1,82 @@
 package cn.cs.callme;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.TypedArray;
-import android.graphics.drawable.Drawable;
+import android.graphics.Color;
 import android.util.AttributeSet;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.webkit.WebSettings;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
+
+import cn.cs.callme.sdk.AdInfo;
+import cn.cs.callme.sdk.CsAdSDK;
 
 /**
- *
+ * 广告组件
+ * 组件的浮标使用WebView加载
  */
 public class CSAdView extends RelativeLayout {
-    private Button leftButton, rightButton;
-    private TextView tvTitile; //左边的Button一些属性
-    private int leftTextColor;
-    private Drawable leftBackground;
-    private String leftText; //右边的Button的属性
-    private int rightTextColor;
-    private Drawable rightBackground;
-    private String rightText; //中间的属性
-    private float titleTextSize;
-    private int titleTextColor;
-    private String title; //布局管理器 左Button ,右边Button ,中间的TextView
-    private LayoutParams leftParams, rigthParams, titleParams; //以下6行就是接口的回调！
-    TopberListener listener;
+    private WebView floatIconView;
+    private LayoutParams layoutParams; //以下6行就是接口的回调！
+    private String adUrl;
+    private String picUrl;
 
-    public CSAdView(Context context, AttributeSet attrs) {
+    public CSAdView(final Context context, AttributeSet attrs) {
         super(context, attrs);
         //TypeArray get attr of layout
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AdView);
-        //color of left font
-        leftTextColor = ta.getColor(R.styleable.AdView_leftTextColor, 0);
-        //background color of left button
-        leftBackground = ta.getDrawable(R.styleable.AdView_leftBackground);
-        //font style of left button
-        leftText = ta.getString(R.styleable.AdView_leftText);
-
-        //color of right font
-        rightTextColor = ta.getColor(R.styleable.AdView_rightTextColor, 0);
-        //background color of right button
-        rightBackground = ta.getDrawable(R.styleable.AdView_rightBackground);
-        //font style of right button
-        rightText = ta.getString(R.styleable.AdView_rightText);
-
-        //middle of title
-        title = ta.getString(R.styleable.AdView_title);
-        //
-        titleTextColor = ta.getColor(R.styleable.AdView_titleTextColor, 0);
-        //
-        titleTextSize = ta.getDimension(R.styleable.AdView_titleTextSize, 0);
 
         //recyle the TypedArray
         ta.recycle();
 
         //
-        leftButton = new Button(context);
-        rightButton = new Button(context);
-        tvTitile = new TextView(context);
-
-        //apply the attr
-        leftButton.setTextColor(leftTextColor);
-        leftButton.setBackground(leftBackground);
-        leftButton.setText(leftText);
-
-        rightButton.setTextColor(rightTextColor);
-        rightButton.setBackground(rightBackground);
-        rightButton.setText(rightText);
-
-        tvTitile.setText(title);
-        tvTitile.setTextColor(titleTextColor);
-        tvTitile.setTextSize(titleTextSize);
-        tvTitile.setGravity(Gravity.CENTER);
-
+        floatIconView = new WebView(context);
+        floatIconView.setScrollBarStyle(View.SCREEN_STATE_OFF);
         //background color
-        setBackgroundColor(0xfff59563);
+        setBackgroundColor(Color.TRANSPARENT);
         //
-        leftParams = new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        leftParams.addRule(RelativeLayout.ALIGN_PARENT_LEFT, TRUE);
-        addView(leftButton, leftParams);
+        layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
+        addView(floatIconView, layoutParams);
 
-        rigthParams = new LayoutParams(LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        rigthParams.addRule(RelativeLayout.ALIGN_PARENT_RIGHT, TRUE);
-        addView(rightButton, rigthParams);
+        //
+        floatIconView.getSettings().setJavaScriptEnabled(true);
 
-        titleParams = new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        titleParams.addRule(RelativeLayout.CENTER_IN_PARENT, TRUE);
-        addView(tvTitile, titleParams);
+        floatIconView.setBackgroundColor(Color.TRANSPARENT);
 
-        //listener
-        leftButton.setOnClickListener(new OnClickListener() {
+        floatIconView.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.SINGLE_COLUMN);
+        floatIconView.getSettings().setDomStorageEnabled(true);
+        floatIconView.getSettings().setDatabaseEnabled(true);
+
+        if(CsAdSDK.getInstance().isShowFloatIcon()){
+            floatIconView.setVisibility(VISIBLE);
+        }else{
+            floatIconView.setVisibility(GONE);
+        }
+
+        //这两值要从远程获取
+        picUrl = "http://www.sprzny.com/css/appfox/fubiao/26.gif";
+        adUrl = "http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__";
+        AdInfo adInfo = CsAdSDK.getInstance().getAdInfo();
+        if(adInfo != null){
+            picUrl = adInfo.getPic();
+            adUrl = adInfo.getUrl();
+        }
+        String data = "<HTML><Div align=\"center\" margin=\"0px\"><a href=\"http://www.baidu.com\"><IMG src=\"" + picUrl + "\" margin=\"0px\" height=\"60\" width=\"60\" /></a></Div></HTML>";//设置图片位于webview的中间位置
+        floatIconView.loadDataWithBaseURL(null, data, "text/html", "utf-8", null);
+
+        floatIconView.setWebViewClient(new WebViewClient() {
             @Override
-            public void onClick(View v) {
-                listener.leftClick();
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                Intent webView = new Intent(context, CSAdDetailActivity.class);
+                webView.putExtra("adUrl", adUrl);
+                context.startActivity(webView);
+                return true;
             }
         });
-
-        rightButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                listener.rightClick();
-            }
-        });
-
     }
-
-    public interface TopberListener {
-        public void leftClick();
-
-        public void rightClick();
-    }
-
-    public void setOnTopberClickListener(TopberListener listener) {
-        this.listener = listener;
-    }
-
 }

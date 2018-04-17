@@ -11,5 +11,8 @@
         <attr name="rightText" format="string"/> <!-- 右边Button字体的颜色-->
         <attr name="rightTextColor" format="color"/> <!-- 右边Button字体的背景颜色-->
         <attr name="rightBackground" format="reference"/>
+
+        <attr name="iconWidth" format="dimension"/> <!--宽度-->
+        <attr name="iconHeight" format="dimension"/> <!-- 高度-->
     </declare-styleable>
 </resources>

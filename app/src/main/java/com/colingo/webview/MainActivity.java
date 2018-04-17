@@ -13,13 +13,11 @@ import android.view.View;
 import android.widget.Button;
 
 import com.baidu.kfk.wv.NotificationBroadcastReceiver;
-
 import com.example.app.R;
 import com.netease.scan.IScanModuleCallBack;
 import com.netease.scan.QrScan;
 import com.netease.scan.ui.CaptureActivity;
 
-import cn.cs.callme.CSAdDetailActivity;
 import cn.cs.callme.CSAdView;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,18 +35,6 @@ public class MainActivity extends AppCompatActivity {
         adView = (CSAdView)findViewById(R.id.bar);
 
 
-        adView.setOnTopberClickListener(new CSAdView.TopberListener() {
-            @Override
-            public void leftClick() {
-                Intent intent = new Intent(MainActivity.this, CSAdDetailActivity.class);
-                startActivity(intent);
-            }
-
-            @Override
-            public void rightClick() {
-
-            }
-        });
 
 //        AdUtils.showAd(this.findViewById(android.R.id.content)
 //                , this);
