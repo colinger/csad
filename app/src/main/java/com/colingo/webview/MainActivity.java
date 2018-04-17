@@ -1,31 +1,32 @@
 package com.colingo.webview;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 
-import com.baidu.kfk.wv.AdUtils;
 import com.baidu.kfk.wv.NotificationBroadcastReceiver;
+
 import com.example.app.R;
 import com.netease.scan.IScanModuleCallBack;
 import com.netease.scan.QrScan;
 import com.netease.scan.ui.CaptureActivity;
 
+import cn.cs.callme.CSAdDetailActivity;
+import cn.cs.callme.CSAdView;
+
 public class MainActivity extends AppCompatActivity {
 
     private CaptureActivity mCaptureContext;
     private Button mStartScanButton;
+    private CSAdView adView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +34,21 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //
         mStartScanButton = (Button)findViewById(R.id.btn_start_scan);
+        adView = (CSAdView)findViewById(R.id.bar);
+
+
+        adView.setOnTopberClickListener(new CSAdView.TopberListener() {
+            @Override
+            public void leftClick() {
+                Intent intent = new Intent(MainActivity.this, CSAdDetailActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void rightClick() {
+
+            }
+        });
 
 //        AdUtils.showAd(this.findViewById(android.R.id.content)
 //                , this);

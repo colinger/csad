@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<resources>
+    <declare-styleable name="AdView">
+        <!-- 中间的标题-->
+        <attr name="title" format="string"/> <!-- 标题字体的大小-->
+        <attr name="titleTextSize" format="dimension"/> <!-- 标题字体的颜色-->
+        <attr name="titleTextColor" format="color"/> <!-- 左边Button字体的颜色-->
+        <attr name="leftTextColor" format="color"/> <!-- 左边Button的背景颜色，这里要注意的是，背景颜色有两种，一种是#326541 还要一种是图片的类型，所以类型有两种-->
+        <attr name="leftBackground" format="reference"/> <!-- 左边Button的字体-->
+        <attr name="leftText" format="string"/> <!-- 右边Button字体-->
+        <attr name="rightText" format="string"/> <!-- 右边Button字体的颜色-->
+        <attr name="rightTextColor" format="color"/> <!-- 右边Button字体的背景颜色-->
+        <attr name="rightBackground" format="reference"/>
+    </declare-styleable>
+</resources>
