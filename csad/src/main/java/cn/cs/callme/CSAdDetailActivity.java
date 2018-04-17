@@ -44,6 +44,7 @@ public class CSAdDetailActivity extends AppCompatActivity {
         }
 
         StatusBarUtils.setStatusColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
+        //
         mWebView = (WebView) findViewById(R.id.activity_main_webview);
 
         /**注册下载完成广播**/
