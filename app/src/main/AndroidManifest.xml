@@ -27,19 +27,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name="com.baidu.kfk.wv.ShowWebViewActivity" android:hardwareAccelerated="true">
-        </activity>
-
-        <activity android:name="com.baidu.kfk.wv.PermissionActivity" android:theme="@style/Theme.AppCompat"/>
-
-        <!--<activity android:name="com.starbaba.worth.category.WorthCategoryActivity" android:screenOrientation="portrait"/>-->
-
-        <receiver android:name="com.baidu.kfk.wv.NotificationBroadcastReceiver">
-            <intent-filter>
-                <action android:name="notification_cancelled"/>
-                <action android:name="notification_clicked"/>
-            </intent-filter>
-        </receiver>
 
         // 注册activity
         <activity android:name="com.netease.scan.ui.CaptureActivity"
