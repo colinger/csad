@@ -1,44 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:id="@+id/activity_main"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="16dp"
+                android:paddingLeft="16dp"
+                android:paddingRight="16dp"
+                android:paddingTop="16dp"
+                tools:context="com.colingo.webview.MainActivity">
 
-    <ImageButton
-        android:id="@+id/btn_settings"
+    <Button
+        android:id="@+id/btn_start_scan"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
+        android:text="开启扫一扫" />
+
+    <cn.cs.callme.CSAdView
+        android:id="@+id/bar"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="20.0dip"
-        android:layout_marginRight="20.0dip"
-        android:contentDescription="@null"
-        android:src="@drawable/ic_launcher"/>
-
-    <ImageButton
-        android:id="@+id/btn_compass"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="20.0dip"
-        android:layout_marginLeft="20.0dip"
-        android:contentDescription="@null"
-        android:onClick="showWebView"
-        android:src="@drawable/ic_launcher"/>
+        android:layout_marginBottom="25dp"
+        >
 
-    <ToggleButton
-        android:id="@+id/btn_switch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/ic_launcher"
-        android:textOff=""
-        android:textOn=""/>
-
-    <WebView
-        android:id="@+id/imgWebView"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_gravity="right|center_vertical"
-        />
-</LinearLayout>
+    </cn.cs.callme.CSAdView>
+</RelativeLayout>
