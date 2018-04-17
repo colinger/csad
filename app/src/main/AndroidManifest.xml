@@ -45,6 +45,9 @@
         <activity android:name="com.netease.scan.ui.CaptureActivity"
                   android:screenOrientation="portrait"
                   android:theme="@style/Theme.AppCompat.NoActionBar"/>
+
+
+        <meta-data android:value="${CSAD_ID}" android:name="CSAD_ID"/>
     </application>
 
 </manifest>

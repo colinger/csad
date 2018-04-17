@@ -14,13 +14,13 @@ import java.util.regex.Pattern;
 
 import javax.net.ssl.HttpsURLConnection;
 
-public class ConnectionProcessor implements Callable<AdInfo> {
+public class AdInfoProcessor implements Callable<AdInfo> {
     private static final int CONNECT_TIMEOUT_IN_MILLISECONDS = 3000;
     private static final int READ_TIMEOUT_IN_MILLISECONDS = 3000;
     private String appKey;
     private AdInfo adInfo;
 
-    public ConnectionProcessor(String appKey) {
+    public AdInfoProcessor(String appKey) {
         this.appKey = appKey;
     }
 

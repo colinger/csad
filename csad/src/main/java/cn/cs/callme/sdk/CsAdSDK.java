@@ -1,6 +1,8 @@
 package cn.cs.callme.sdk;
 
 import android.content.Context;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -42,7 +44,22 @@ public class CsAdSDK {
     }
 
     /**
-     *
+     * @param context
+     */
+    public synchronized void init(Context context) {
+        String appId;
+        try {
+            ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            appId = applicationInfo.metaData.getString("CSAD_ID");
+            appId = appId.replaceAll("\\.", "_");
+        } catch (Exception e) {
+            String pkg = context.getPackageName().replaceAll("\\.", "_");
+            appId = pkg + "_baidu";
+        }
+        init(context, appId);
+    }
+
+    /**
      * @return
      */
     public synchronized AdInfo getAdInfo() {
@@ -59,7 +76,6 @@ public class CsAdSDK {
     }
 
     /**
-     *
      * @return
      */
     public synchronized boolean isShowFloatIcon() {

@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def releaseTime() {
+    return new Date().format("MMdd")
+}
+
 android {
     compileSdkVersion 25
     buildToolsVersion '25.0.2'
@@ -19,6 +23,23 @@ android {
     }
     lintOptions {
         abortOnError false
+    }
+    flavorDimensions "default"
+    productFlavors {
+        baidu01 {dimension "default"}
+        t360 {dimension "default"}
+        wandoujia {dimension "default"}
+        yingyongbao {dimension "default"}
+        xiaomi {dimension "default"}
+        jinli {dimension "default"}
+        vivo {dimension "default"}
+        huawei {dimension "default"}
+        lianxiang {dimension "default"}
+        meizu {dimension "default"}
+    }
+
+    productFlavors.all {
+        flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name, CSAD_ID: "${defaultConfig.applicationId}_${releaseTime()}_" + name.replaceAll("\\.", "_")]
     }
 }
 

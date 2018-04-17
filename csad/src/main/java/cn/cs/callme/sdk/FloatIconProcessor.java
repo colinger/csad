@@ -80,6 +80,8 @@ public class FloatIconProcessor implements Callable<Boolean> {
                     //
                     if (sb.toString().toLowerCase().equals("true")) {
                         return Boolean.valueOf(true);
+                    }else{
+                        return Boolean.valueOf(false);
                     }
                 } else if (responseCode >= 400 && responseCode < 500) {
                     return Boolean.valueOf(false);
