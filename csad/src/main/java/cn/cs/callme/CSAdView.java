@@ -25,8 +25,22 @@ public class CSAdView extends RelativeLayout {
     private String adUrl;
     private String picUrl;
 
-    public CSAdView(final Context context, AttributeSet attrs) {
+
+    public CSAdView(Context context) {
+        super(context);
+    }
+
+    public CSAdView(Context context, AttributeSet attrs) {
         super(context, attrs);
+        init(context, attrs);
+    }
+
+    public CSAdView(Context context, AttributeSet attrs, int defStyleAttr) {
+        super(context, attrs, defStyleAttr);
+        init(context, attrs);
+    }
+
+    public void init(final Context context, AttributeSet attrs) {
         //TypeArray get attr of layout
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AdView);
 
