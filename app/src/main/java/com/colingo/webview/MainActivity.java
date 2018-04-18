@@ -1,26 +1,21 @@
 package com.colingo.webview;
 
-import android.app.Activity;
+import android.Manifest;
 import android.app.AlertDialog;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
-import com.baidu.kfk.wv.AdUtils;
-import com.baidu.kfk.wv.NotificationBroadcastReceiver;
 import com.example.app.R;
 import com.netease.scan.IScanModuleCallBack;
 import com.netease.scan.QrScan;
 import com.netease.scan.ui.CaptureActivity;
+
+import cn.cs.callme.permission.ZbPermission;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,10 +28,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         //
         mStartScanButton = (Button)findViewById(R.id.btn_start_scan);
-
-//        AdUtils.showAd(this.findViewById(android.R.id.content)
-//                , this);
-
+        //
         mStartScanButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,25 +61,19 @@ public class MainActivity extends AppCompatActivity {
                 });
             }
         });
+        ZbPermission.with(MainActivity.this).addRequestCode(100)
+                .permissions(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                .request(new ZbPermission.ZbPermissionCallback(){
+                    @Override
+                    public void permissionSuccess(int requestCode) {
+                        Toast.makeText(MainActivity.this, "成功授予Contact权限: " + requestCode, Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void permissionFail(int requestCode) {
+                        Toast.makeText(MainActivity.this, "失败授予Contact权限: " + requestCode, Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
-    private void showNotification(String msg){
-        //Creating a notification
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        builder.setSmallIcon(R.drawable.ic_lucky);
-
-        Intent intentClick = new Intent(this, NotificationBroadcastReceiver.class);
-        intentClick.setAction("notification_clicked");
-//        intentClick.putExtra(NotificationBroadcastReceiver.TYPE, type);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(this, 0, intentClick, PendingIntent.FLAG_ONE_SHOT);
-
-
-//        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__"));
-//        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-        builder.setContentIntent(pendingIntent);
-        builder.setContentTitle("恭喜您，中奖了");
-        builder.setContentText("恭喜发财，大吉大利！【点击查看】");
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.notify(1, builder.build());
-    }
 }

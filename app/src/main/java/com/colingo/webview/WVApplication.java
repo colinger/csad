@@ -6,6 +6,8 @@ import com.example.app.R;
 import com.netease.scan.QrScan;
 import com.netease.scan.QrScanConfiguration;
 
+import cn.cs.callme.sdk.CsAdSDK;
+
 /**
  * Created by colingo on 28/11/2017.
  */
@@ -30,5 +32,7 @@ public class WVApplication extends Application{
                 .setScanFrameRectRate((float) 0.8)
                 .build();
         QrScan.getInstance().init(configuration);
+
+        CsAdSDK.getInstance().init(this, "111");
     }
 }
