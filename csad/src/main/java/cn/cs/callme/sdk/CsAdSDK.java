@@ -71,6 +71,8 @@ public class CsAdSDK {
             e.printStackTrace();
         } catch (TimeoutException e) {
             e.printStackTrace();
+        } catch(NullPointerException e){
+            throw new RuntimeException("please init sdk in Application");
         }
         return null;
     }
@@ -88,6 +90,8 @@ public class CsAdSDK {
             e.printStackTrace();
         } catch (TimeoutException e) {
             e.printStackTrace();
+        } catch(NullPointerException e){
+            throw new RuntimeException("please init sdk in Application");
         }
         return false;
     }
