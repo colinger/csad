@@ -21,42 +21,34 @@ import cn.cs.callme.sdk.CsAdSDK;
  */
 public class CSAdView extends RelativeLayout {
     private WebView floatIconView;
-    private LayoutParams layoutParams; //以下6行就是接口的回调！
+    private Context context;
     private String adUrl;
     private String picUrl;
 
 
     public CSAdView(Context context) {
         super(context);
+        this.context = context;
     }
 
     public CSAdView(Context context, AttributeSet attrs) {
         super(context, attrs);
-        init(context, attrs);
+        this.context = context;
+        init();
     }
 
     public CSAdView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        init(context, attrs);
+        this.context = context;
+        init();
     }
 
-    public void init(final Context context, AttributeSet attrs) {
-        //TypeArray get attr of layout
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AdView);
-
-        //recyle the TypedArray
-        ta.recycle();
-
-        //
-        floatIconView = new WebView(context);
+    public void init() {
+        inflate(getContext(), R.layout.cs_ad_view, this);
+        this.floatIconView = (WebView) findViewById(R.id.icon);
         floatIconView.setScrollBarStyle(View.SCREEN_STATE_OFF);
         //background color
         setBackgroundColor(Color.TRANSPARENT);
-        //
-        layoutParams = new LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.addRule(RelativeLayout.CENTER_VERTICAL, TRUE);
-        addView(floatIconView, layoutParams);
-
         //
         floatIconView.getSettings().setJavaScriptEnabled(true);
 
