@@ -20,7 +20,6 @@ import android.webkit.MimeTypeMap;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.TextView;
 
 import java.io.File;
 
@@ -43,7 +42,7 @@ public class CSAdDetailActivity extends AppCompatActivity {
         if (supportActionBar != null) {
             supportActionBar.setDisplayHomeAsUpEnabled(true);
         }
-
+        mScrollToolBar.setBackgroundResource(R.color.colorPrimary);
         StatusBarUtils.setStatusColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         //
         mWebView = (WebView) findViewById(R.id.activity_main_webview);

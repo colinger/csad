@@ -13,7 +13,7 @@
             android:id="@+id/scroll_tb_tb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryBar"
+            android:background="@color/colorPrimary"
             android:title="@string/app_name"
             app:layout_scrollFlags="scroll|enterAlways"
             app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
