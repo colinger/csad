@@ -9,6 +9,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.TextView;
 
 import java.util.concurrent.SynchronousQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -17,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 /**
  *
  */
-public class FloatingIcon extends android.support.v7.widget.AppCompatTextView {
+public class FloatingIcon extends TextView {
     private int mWidth;
     private int mHeight;
 

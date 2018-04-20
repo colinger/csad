@@ -3,8 +3,6 @@ package cn.cs.callme;
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
-import android.support.annotation.ColorInt;
-import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -42,7 +40,7 @@ public class StatusBarUtils {
      * @param activity
      * @param color
      */
-    public static void setStatusColor(Activity activity, @ColorInt int color) {
+    public static void setStatusColor(Activity activity, int color) {
         setStatusColor(activity, color, 0);
     }
 
