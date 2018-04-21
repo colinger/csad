@@ -35,13 +35,13 @@ public class CSAdDetailActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cs_ad_main);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
+        setContentView(R.layout.activity_cs_ad_main);
         //
         mWebView = (WebView) findViewById(R.id.activity_main_webview);
         mTitle = (TextView) findViewById(R.id.txtTitle);
         mBtnBack = (Button) findViewById(R.id.btnBack);
-        mScrollToolBar = (RelativeLayout) findViewById(R.id.titlebar);
+        mScrollToolBar = (RelativeLayout) findViewById(R.id.titbar);
         //
         mScrollToolBar.setBackgroundResource(R.color.colorPrimary);
 
