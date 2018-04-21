@@ -2,5 +2,4 @@
 <resources tools:override="true" xmlns:tools="http://schemas.android.com/tools">
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#3F51B5</color>
-    <color name="colorAccent">#FF4081</color>
 </resources>
