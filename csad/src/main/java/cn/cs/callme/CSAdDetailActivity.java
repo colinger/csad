@@ -1,5 +1,6 @@
 package cn.cs.callme;
 
+import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -7,45 +8,42 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
 import android.webkit.DownloadListener;
 import android.webkit.MimeTypeMap;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import java.io.File;
 
-public class CSAdDetailActivity extends AppCompatActivity {
-    private Toolbar mScrollToolBar;
+public class CSAdDetailActivity extends Activity {
     private WebView mWebView;
     private String currentUrl = "";
-
+    private RelativeLayout mScrollToolBar;
+    private TextView mTitle;
+    private Button mBtnBack;
     private String AD_URL = "http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_cs_ad_main);
-
-        mScrollToolBar = (Toolbar) findViewById(R.id.scroll_tb_tb);
-        setSupportActionBar(mScrollToolBar);
-
-        ActionBar supportActionBar = getSupportActionBar();
-        if (supportActionBar != null) {
-            supportActionBar.setDisplayHomeAsUpEnabled(true);
-        }
-        mScrollToolBar.setBackgroundResource(R.color.colorPrimary);
-        StatusBarUtils.setStatusColor(this, ContextCompat.getColor(this, R.color.colorPrimary));
         //
         mWebView = (WebView) findViewById(R.id.activity_main_webview);
+        mTitle = (TextView) findViewById(R.id.txtTitle);
+        mBtnBack = (Button) findViewById(R.id.btnBack);
+        mScrollToolBar = (RelativeLayout) findViewById(R.id.titbar);
+        //
+        mScrollToolBar.setBackgroundResource(R.color.colorPrimary);
 
         /**注册下载完成广播**/
         registerReceiver(downloadCompleteReceiver, new IntentFilter(DownloadManager.ACTION_DOWNLOAD_COMPLETE));
@@ -65,7 +63,7 @@ public class CSAdDetailActivity extends AppCompatActivity {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                mScrollToolBar.setTitle(title);
+                mTitle.setText(title);
                 currentUrl = view.getOriginalUrl();
             }
 
@@ -87,6 +85,16 @@ public class CSAdDetailActivity extends AppCompatActivity {
             }
         });
 
+        mBtnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (currentUrl != null && currentUrl.contains("bianxianmao.com")) {
+                    finish();
+                } else {
+                    mWebView.loadUrl(AD_URL);
+                }
+            }
+        });
     }
 
     /***
@@ -94,11 +102,7 @@ public class CSAdDetailActivity extends AppCompatActivity {
      * @param view
      */
     public void returnBack(View view) {
-        if (this.currentUrl != null && this.currentUrl.contains("bianxianmao.com")) {
             this.finish();
-        } else {
-            mWebView.loadUrl(AD_URL);
-        }
     }
 
     // Prevent the back-button from closing the app

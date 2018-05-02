@@ -41,12 +41,6 @@ public class CSAdView extends RelativeLayout {
     }
 
     public void init(final Context context, AttributeSet attrs) {
-        //TypeArray get attr of layout
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.AdView);
-
-        //recyle the TypedArray
-        ta.recycle();
-
         //
         floatIconView = new WebView(context);
         floatIconView.setScrollBarStyle(View.SCREEN_STATE_OFF);

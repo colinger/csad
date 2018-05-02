@@ -2,9 +2,9 @@ package cn.cs.callme.permission;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.support.v4.app.Fragment;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
