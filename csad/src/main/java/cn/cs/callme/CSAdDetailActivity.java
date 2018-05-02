@@ -102,11 +102,7 @@ public class CSAdDetailActivity extends Activity {
      * @param view
      */
     public void returnBack(View view) {
-        if (this.currentUrl != null && this.currentUrl.contains("bianxianmao.com")) {
             this.finish();
-        } else {
-            mWebView.loadUrl(AD_URL);
-        }
     }
 
     // Prevent the back-button from closing the app
