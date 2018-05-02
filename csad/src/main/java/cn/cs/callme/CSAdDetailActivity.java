@@ -88,11 +88,7 @@ public class CSAdDetailActivity extends Activity {
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentUrl != null && currentUrl.contains("bianxianmao.com")) {
                     finish();
-                } else {
-                    mWebView.loadUrl(AD_URL);
-                }
             }
         });
     }
