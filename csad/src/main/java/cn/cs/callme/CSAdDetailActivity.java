@@ -25,12 +25,12 @@ import android.widget.TextView;
 import java.io.File;
 
 public class CSAdDetailActivity extends Activity {
-    private WebView mWebView;
-    private String currentUrl = "";
+    private WebView        mWebView;
+    private String         currentUrl = "";
     private RelativeLayout mScrollToolBar;
-    private TextView mTitle;
-    private Button mBtnBack;
-    private String AD_URL = "http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__";
+    private TextView       mTitle;
+    private Button         mBtnBack;
+    private String         AD_URL     = "http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,14 +93,6 @@ public class CSAdDetailActivity extends Activity {
         });
     }
 
-    /***
-     *
-     * @param view
-     */
-    public void returnBack(View view) {
-            this.finish();
-    }
-
     // Prevent the back-button from closing the app
     @Override
     public void onBackPressed() {
@@ -116,7 +108,7 @@ public class CSAdDetailActivity extends Activity {
         if (event.getAction() == KeyEvent.ACTION_DOWN) {
             switch (keyCode) {
                 case KeyEvent.KEYCODE_BACK: {
-                    finish();
+
                 }
                 return true;
             }
