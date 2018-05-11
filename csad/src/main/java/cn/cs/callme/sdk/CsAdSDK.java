@@ -13,7 +13,9 @@ import java.util.concurrent.TimeoutException;
  */
 public class CsAdSDK {
     private ConnectionQueue connectionQueue;
-
+    private String appId;
+    private String defaultUrl= "";
+    private String defaultPic= "http://www.sprzny.com/css/appfox/fubiao/26.gif";
     private static class CsAdSDKHolder {
         private final static CsAdSDK INSTANCE = new CsAdSDK();
     }
@@ -38,6 +40,7 @@ public class CsAdSDK {
         if (context == null) {
             throw new IllegalArgumentException("valid context is required");
         }
+        this.appId = appKey;
         connectionQueue.setAppKey_(appKey);
         connectionQueue.loadData();
         connectionQueue.loadFloatFlag();
@@ -63,18 +66,37 @@ public class CsAdSDK {
      * @return
      */
     public synchronized AdInfo getAdInfo() {
+        AdInfo adInfo;
         try {
-            return (AdInfo) connectionQueue.getConnectionProcessorFuture_().get(5, TimeUnit.SECONDS);
+            adInfo = (AdInfo) connectionQueue.getConnectionProcessorFuture_().get(5, TimeUnit.SECONDS);
+            if(adInfo == null){
+                adInfo = new AdInfo();
+                adInfo.setUrl(defaultUrl);
+                adInfo.setPic(defaultPic);
+            }
+            return adInfo;
         } catch (InterruptedException e) {
             e.printStackTrace();
+            adInfo = new AdInfo();
+            adInfo.setUrl(defaultUrl);
+            adInfo.setPic(defaultPic);
         } catch (ExecutionException e) {
             e.printStackTrace();
+            adInfo = new AdInfo();
+            adInfo.setUrl(defaultUrl);
+            adInfo.setPic(defaultPic);
         } catch (TimeoutException e) {
             e.printStackTrace();
+            adInfo = new AdInfo();
+            adInfo.setUrl(defaultUrl);
+            adInfo.setPic(defaultPic);
         } catch(NullPointerException e){
-            throw new RuntimeException("please init sdk in Application");
+            adInfo = new AdInfo();
+            adInfo.setUrl(defaultUrl);
+            adInfo.setPic(defaultPic);
+            e.printStackTrace();
         }
-        return null;
+        return adInfo;
     }
 
     /**
@@ -94,5 +116,9 @@ public class CsAdSDK {
             throw new RuntimeException("please init sdk in Application");
         }
         return false;
+    }
+
+    public String getAppId() {
+        return appId;
     }
 }
