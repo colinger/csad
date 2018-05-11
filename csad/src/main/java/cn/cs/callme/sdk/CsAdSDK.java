@@ -14,7 +14,7 @@ import java.util.concurrent.TimeoutException;
 public class CsAdSDK {
     private ConnectionQueue connectionQueue;
     private String appId;
-    private String defaultUrl= "";
+    private String defaultUrl= "http://www.sprzny.com/api/xiaoshitou/1";
     private String defaultPic= "http://www.sprzny.com/css/appfox/fubiao/26.gif";
     private static class CsAdSDKHolder {
         private final static CsAdSDK INSTANCE = new CsAdSDK();
