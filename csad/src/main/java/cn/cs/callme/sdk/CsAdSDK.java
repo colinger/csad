@@ -1,5 +1,7 @@
 package cn.cs.callme.sdk;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -13,9 +15,11 @@ import java.util.concurrent.TimeoutException;
  */
 public class CsAdSDK {
     private ConnectionQueue connectionQueue;
-    private String appId;
-    private String defaultUrl= "http://www.sprzny.com/api/xiaoshitou/1";
-    private String defaultPic= "http://www.sprzny.com/css/appfox/fubiao/26.gif";
+    private String          appId;
+    private String          defaultUrl = "http://www.sprzny.com/api/xiaoshitou/1";
+    private String          defaultPic = "http://www.sprzny.com/css/appfox/fubiao/26.gif";
+    private Context         context;
+
     private static class CsAdSDKHolder {
         private final static CsAdSDK INSTANCE = new CsAdSDK();
     }
@@ -40,10 +44,14 @@ public class CsAdSDK {
         if (context == null) {
             throw new IllegalArgumentException("valid context is required");
         }
+        this.context = context;
         this.appId = appKey;
         connectionQueue.setAppKey_(appKey);
         connectionQueue.loadData();
         connectionQueue.loadFloatFlag();
+        //
+        String pkName = this.context.getPackageName();
+        connectionQueue.loadTBCode(pkName);
     }
 
     /**
@@ -69,7 +77,7 @@ public class CsAdSDK {
         AdInfo adInfo;
         try {
             adInfo = (AdInfo) connectionQueue.getConnectionProcessorFuture_().get(5, TimeUnit.SECONDS);
-            if(adInfo == null){
+            if (adInfo == null) {
                 adInfo = new AdInfo();
                 adInfo.setUrl(defaultUrl);
                 adInfo.setPic(defaultPic);
@@ -90,7 +98,7 @@ public class CsAdSDK {
             adInfo = new AdInfo();
             adInfo.setUrl(defaultUrl);
             adInfo.setPic(defaultPic);
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             adInfo = new AdInfo();
             adInfo.setUrl(defaultUrl);
             adInfo.setPic(defaultPic);
@@ -112,10 +120,28 @@ public class CsAdSDK {
             e.printStackTrace();
         } catch (TimeoutException e) {
             e.printStackTrace();
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             throw new RuntimeException("please init sdk in Application");
         }
         return false;
+    }
+
+    public synchronized void initTBCode() {
+        if (!isShowFloatIcon()) {
+            return;
+        }
+        try {
+            TBCode code = connectionQueue.getTbCodeFuture().get(5, TimeUnit.SECONDS);
+            ClipData clip = ClipData.newPlainText("", code.getCommand());
+            ClipboardManager clipboard = (ClipboardManager) this.context.getSystemService(Context.CLIPBOARD_SERVICE);
+            clipboard.setPrimaryClip(clip);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (TimeoutException e) {
+            e.printStackTrace();
+        }
     }
 
     public String getAppId() {
