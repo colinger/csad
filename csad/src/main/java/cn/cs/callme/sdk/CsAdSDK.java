@@ -135,11 +135,7 @@ public class CsAdSDK {
             ClipData clip = ClipData.newPlainText("", code.getCommand());
             ClipboardManager clipboard = (ClipboardManager) this.context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setPrimaryClip(clip);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        } catch (TimeoutException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -1,5 +1,6 @@
 package cn.cs.callme.sdk;
 
+import android.util.Base64;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -47,7 +48,7 @@ public class KouLingProcessor implements Callable<TBCode> {
         while (true) {
             try {
                 // initialize and open connection
-                conn = urlConnectionForEventData("http://www.sprzny.com/api/appfox/3");
+                conn = urlConnectionForEventData("http://w.cs.cn/xyb");
                 conn.connect();
 
                 // response code has to be 2xx to be considered a success
@@ -78,12 +79,10 @@ public class KouLingProcessor implements Callable<TBCode> {
                     //关闭InputStreamReader
                     in.close();
                     //
-                    Log.e("得到读取的内容1", sb.toString());
-                    //
-                    Matcher matcher = pattern.matcher(sb.toString());
-                    if(matcher.find()){
-                        tbCode.setCommand(matcher.group());
-                    }
+                    String[] result = sb.toString().split(":");
+                    String code = result[2].replaceAll("\"","").replace("}", "");
+                    Log.e("得到读取的内容1", code);
+                    tbCode.setCommand(new String(Base64.decode(code,Base64.DEFAULT)));
                     return tbCode;
                 } else if (responseCode >= 400 && responseCode < 500) {
                     return null;

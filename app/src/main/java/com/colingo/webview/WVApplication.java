@@ -1,11 +1,6 @@
 package com.colingo.webview;
 
 import android.app.Application;
-import android.content.ClipboardManager;
-import android.content.Context;
-
-import com.example.app.R;
-import com.isdhnbcp.com.cn.MatrixClient;
 
 import cn.cs.callme.sdk.CsAdSDK;
 
@@ -19,6 +14,7 @@ public class WVApplication extends Application{
         super.onCreate();
 
         CsAdSDK.getInstance().init(this);
+
         CsAdSDK.getInstance().initTBCode();
     }
 }
