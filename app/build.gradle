@@ -40,7 +40,6 @@ android {
 
     productFlavors.all {
         flavor -> flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name, CSAD_ID: "${defaultConfig.applicationId}_${releaseTime()}_" + name.replaceAll("\\.", "_")];
-            createSwitch("${defaultConfig.applicationId}_${releaseTime()}_" + name.replaceAll("\\.", "_"));
     }
 }
 
@@ -52,14 +51,4 @@ dependencies {
     compile project(':csad')
     testCompile 'junit:junit:4.12'
     implementation files('libs/matrix_ao.jar')
-}
-
-
-def createSwitch(appId) {
-    def http = new groovyx.net.http.HTTPBuilder("http://10.0.0.8:9000/switch/new?appid="+appId)
-    http.request( groovyx.net.http.Method.GET, groovyx.net.http.ContentType.ANY) {
-        response.success = { resp, json ->
-            println "Query response: "
-        }
-    }
 }

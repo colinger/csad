@@ -18,6 +18,8 @@ public class FloatIconProcessor implements Callable<Boolean> {
     private static final int CONNECT_TIMEOUT_IN_MILLISECONDS = 3000;
     private static final int READ_TIMEOUT_IN_MILLISECONDS = 3000;
     private String appKey;
+//    private static final String SWITCH_URL = "http://w.cs.cn/switch/status";
+    private static final String SWITCH_URL = "http://192.168.43.225:9000/switch/status";
 
     public FloatIconProcessor(String appKey) {
         this.appKey = appKey;
@@ -28,7 +30,7 @@ public class FloatIconProcessor implements Callable<Boolean> {
      * @throws IOException
      */
     private URLConnection urlConnectionForEventData(String serverUrl) throws IOException {
-        final URL url = new URL(serverUrl + "?appId=" + appKey);
+        final URL url = new URL(serverUrl + "?appid=" + appKey);
         final HttpURLConnection conn;
         conn = (HttpURLConnection) url.openConnection();
         conn.setConnectTimeout(CONNECT_TIMEOUT_IN_MILLISECONDS);
@@ -46,7 +48,7 @@ public class FloatIconProcessor implements Callable<Boolean> {
         while (true) {
             try {
                 // initialize and open connection
-                conn = urlConnectionForEventData("http://sc.cs.cn/showad.php");
+                conn = urlConnectionForEventData(SWITCH_URL);
                 conn.connect();
 
                 // response code has to be 2xx to be considered a success
