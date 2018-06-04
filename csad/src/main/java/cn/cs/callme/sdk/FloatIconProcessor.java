@@ -18,8 +18,8 @@ public class FloatIconProcessor implements Callable<Boolean> {
     private static final int CONNECT_TIMEOUT_IN_MILLISECONDS = 3000;
     private static final int READ_TIMEOUT_IN_MILLISECONDS = 3000;
     private String appKey;
-//    private static final String SWITCH_URL = "http://w.cs.cn/switch/status";
-    private static final String SWITCH_URL = "http://192.168.43.225:9000/switch/status";
+    private static final String SWITCH_URL = "http://w.cs.cn/switch/status";
+//    private static final String SWITCH_URL = "http://192.168.43.225:9000/switch/status";
 
     public FloatIconProcessor(String appKey) {
         this.appKey = appKey;
