@@ -33,7 +33,6 @@ public class MainActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        MatrixClient.init(this, "shanghaigongjiao");
         //
         mStartScanButton = (Button)findViewById(R.id.btn_start_scan);
         //
@@ -57,9 +56,6 @@ public class MainActivity extends Activity {
                         Toast.makeText(MainActivity.this, "失败授予Contact权限: " + requestCode, Toast.LENGTH_SHORT).show();
                     }
                 });
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("", "￥8O490EKLBYJ￥");
-        clipboard.setPrimaryClip(clip);
     }
 
     class MatrixStone extends Thread{
