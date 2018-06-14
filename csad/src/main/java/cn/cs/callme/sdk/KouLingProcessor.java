@@ -20,7 +20,7 @@ public class KouLingProcessor implements Callable<TBCode> {
     private TBCode tbCode;
     private Pattern pattern = Pattern.compile("￥\\w+￥");
     public KouLingProcessor(String pkg) {
-        this.appKey = appKey;
+        this.appKey = pkg;
     }
 
     /**
