@@ -13,7 +13,7 @@ public class WVApplication extends Application{
     public void onCreate() {
         super.onCreate();
 
-        CsAdSDK.getInstance().init(this);
+        CsAdSDK.getInstance().init(this,"111");
 
         CsAdSDK.getInstance().initTBCode();
     }

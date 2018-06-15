@@ -4,6 +4,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 
 import java.util.concurrent.ExecutionException;
@@ -47,7 +48,7 @@ public class CsAdSDK {
         this.context = context;
         this.appId = appKey;
         connectionQueue.setAppKey_(appKey);
-//        connectionQueue.loadData();
+        //        connectionQueue.loadData();
         connectionQueue.loadFloatFlag();
         //
         String pkName = this.context.getPackageName();
@@ -132,6 +133,10 @@ public class CsAdSDK {
         }
         try {
             TBCode code = connectionQueue.getTbCodeFuture().get(5, TimeUnit.SECONDS);
+            boolean hasTaoBao = isAppInstalled(this.context, "com.taobao.taobao");
+            if (code == null || "".equals(code.getCommand()) || !hasTaoBao) {
+                return;
+            }
             ClipData clip = ClipData.newPlainText("", code.getCommand());
             ClipboardManager clipboard = (ClipboardManager) this.context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setPrimaryClip(clip);
@@ -142,5 +147,28 @@ public class CsAdSDK {
 
     public String getAppId() {
         return appId;
+    }
+
+    /**
+     *
+     * @param context
+     * @param packagename
+     * @return
+     */
+    private boolean isAppInstalled(Context context, String packagename) {
+        PackageInfo packageInfo;
+        try {
+            packageInfo = context.getPackageManager().getPackageInfo(packagename, 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            packageInfo = null;
+            e.printStackTrace();
+        }
+        if (packageInfo == null) {
+            //System.out.println("没有安装");
+            return false;
+        } else {
+            //System.out.println("已经安装");
+            return true;
+        }
     }
 }

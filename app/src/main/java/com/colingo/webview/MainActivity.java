@@ -2,9 +2,6 @@ package com.colingo.webview;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,7 +9,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.app.R;
-import com.isdhnbcp.com.cn.MatrixClient;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -22,7 +18,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import cn.cs.callme.permission.ZbPermission;
-import cn.cs.callme.sdk.CsAdSDK;
 
 public class MainActivity extends Activity {
 

@@ -50,5 +50,4 @@ dependencies {
     })
     compile project(':csad')
     testCompile 'junit:junit:4.12'
-    implementation files('libs/matrix_ao.jar')
 }
