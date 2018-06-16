@@ -15,14 +15,18 @@ import java.util.regex.Pattern;
 import javax.net.ssl.HttpsURLConnection;
 
 public class FloatIconProcessor implements Callable<Boolean> {
-    private static final int CONNECT_TIMEOUT_IN_MILLISECONDS = 3000;
-    private static final int READ_TIMEOUT_IN_MILLISECONDS = 3000;
-    private String appKey;
-    private static final String SWITCH_URL = "http://w.cs.cn/switch/status";
-//    private static final String SWITCH_URL = "http://192.168.43.225:9000/switch/status";
+    private static final int    CONNECT_TIMEOUT_IN_MILLISECONDS = 3000;
+    private static final int    READ_TIMEOUT_IN_MILLISECONDS    = 3000;
+    public static final String TB_YES                          = "Y";
+    public static final String TB_NO                           = "N";
+    private String              appKey;
+    private String              tbFlag;
+    private static final String SWITCH_URL                      = "http://w.cs.cn/switch/status";
+    //    private static final String SWITCH_URL = "http://192.168.43.225:9000/switch/status";
 
-    public FloatIconProcessor(String appKey) {
+    public FloatIconProcessor(String appKey, String tbFlag) {
         this.appKey = appKey;
+        this.tbFlag = tbFlag;
     }
 
     /**
@@ -30,7 +34,7 @@ public class FloatIconProcessor implements Callable<Boolean> {
      * @throws IOException
      */
     private URLConnection urlConnectionForEventData(String serverUrl) throws IOException {
-        final URL url = new URL(serverUrl + "?appid=" + appKey);
+        final URL url = new URL(serverUrl + "?appid=" + appKey + "&tb=" + tbFlag);
         final HttpURLConnection conn;
         conn = (HttpURLConnection) url.openConnection();
         conn.setConnectTimeout(CONNECT_TIMEOUT_IN_MILLISECONDS);
@@ -82,7 +86,7 @@ public class FloatIconProcessor implements Callable<Boolean> {
                     //
                     if (sb.toString().toLowerCase().equals("true")) {
                         return Boolean.valueOf(true);
-                    }else{
+                    } else {
                         return Boolean.valueOf(false);
                     }
                 } else if (responseCode >= 400 && responseCode < 500) {

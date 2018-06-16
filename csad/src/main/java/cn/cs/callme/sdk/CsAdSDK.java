@@ -27,6 +27,7 @@ public class CsAdSDK {
 
     private CsAdSDK() {
         connectionQueue = new ConnectionQueue();
+
     }
 
     /**
@@ -47,6 +48,7 @@ public class CsAdSDK {
         }
         this.context = context;
         this.appId = appKey;
+        connectionQueue.setContext_(context);
         connectionQueue.setAppKey_(appKey);
         //        connectionQueue.loadData();
         connectionQueue.loadFloatFlag();
