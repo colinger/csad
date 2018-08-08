@@ -170,7 +170,11 @@ public class CSAdDetailActivity extends Activity {
     @Override
     protected void onStop() {
         super.onStop();
-        unregisterReceiver(downloadCompleteReceiver);
+        try {
+            unregisterReceiver(downloadCompleteReceiver);
+        } catch (Exception e) {
+            //
+        }
     }
 
     @Override
