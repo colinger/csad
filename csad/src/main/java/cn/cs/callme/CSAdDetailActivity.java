@@ -54,6 +54,7 @@ public class CSAdDetailActivity extends Activity {
         mWebView.getSettings().setLoadWithOverviewMode(true);
         mWebView.getSettings().setBlockNetworkImage(false);
         mWebView.getSettings().setUseWideViewPort(true);
+        mWebView.getSettings().setTextZoom(100);
         //
         String adUrl = getIntent().getStringExtra("adUrl");
         if (!TextUtils.isEmpty(adUrl)) {

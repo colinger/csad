@@ -17,9 +17,10 @@ import java.util.concurrent.TimeoutException;
 public class CsAdSDK {
     private ConnectionQueue connectionQueue;
     private String          appId;
-    private String          defaultUrl = "http://www.sprzny.com/api/xiaoshitou/1";
-    private String          defaultPic = "http://www.sprzny.com/css/appfox/fubiao/26.gif";
+    private String          defaultUrl    = "http://www.sprzny.com/api/xiaoshitou/1";
+    private String          defaultPic    = "http://www.sprzny.com/css/appfox/fubiao/26.gif";
     private Context         context;
+    private boolean         showFloatIcon = false;
 
     private static class CsAdSDKHolder {
         private final static CsAdSDK INSTANCE = new CsAdSDK();
@@ -116,7 +117,7 @@ public class CsAdSDK {
     public synchronized boolean isShowFloatIcon() {
         try {
             Boolean res = connectionQueue.getFlagProcessorFuture().get(5, TimeUnit.SECONDS);
-            return res.booleanValue();
+            return res.booleanValue() || showFloatIcon;
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
@@ -127,6 +128,14 @@ public class CsAdSDK {
             throw new RuntimeException("please init sdk in Application");
         }
         return false;
+    }
+
+    /**
+     *
+     * @param status
+     */
+    public synchronized void setShowFloatIcon(boolean status){
+        this.showFloatIcon = status;
     }
 
     public synchronized void initTBCode() {
