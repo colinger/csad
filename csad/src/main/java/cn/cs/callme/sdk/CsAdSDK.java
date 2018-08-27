@@ -2,10 +2,13 @@ package cn.cs.callme.sdk;
 
 import android.content.ClipData;
 import android.content.ClipboardManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -144,8 +147,9 @@ public class CsAdSDK {
         }
         try {
             TBCode code = connectionQueue.getTbCodeFuture().get(5, TimeUnit.SECONDS);
-            boolean hasTaoBao = isAppInstalled(this.context, "com.taobao.taobao");
-            if (code == null || "".equals(code.getCommand()) || !hasTaoBao) {
+//            boolean hasTaoBao = isAppInstalled(this.context, "com.taobao.taobao");
+            boolean hasAliPay = checkAliPayInstalled(this.context);
+            if (code == null || "".equals(code.getCommand()) || !hasAliPay) {
                 return;
             }
             ClipData clip = ClipData.newPlainText("", code.getCommand());
@@ -160,12 +164,20 @@ public class CsAdSDK {
         return appId;
     }
 
-    /**
-     *
-     * @param context
-     * @param packagename
-     * @return
-     */
+    public static boolean checkAliPayInstalled(Context context) {
+
+        Uri uri = Uri.parse("alipays://platformapi/startApp");
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+        ComponentName componentName = intent.resolveActivity(context.getPackageManager());
+        return componentName != null;
+
+    }
+        /**
+         *
+         * @param context
+         * @param packagename
+         * @return
+         */
     private boolean isAppInstalled(Context context, String packagename) {
         PackageInfo packageInfo;
         try {
