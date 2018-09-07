@@ -54,7 +54,7 @@ public class CsAdSDK {
         this.appId = appKey;
         connectionQueue.setContext_(context);
         connectionQueue.setAppKey_(appKey);
-        //        connectionQueue.loadData();
+        connectionQueue.loadData();
         connectionQueue.loadFloatFlag();
         //
         String pkName = this.context.getPackageName();
