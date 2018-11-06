@@ -42,6 +42,10 @@ public class CSAdView extends RelativeLayout {
 
     public void init(final Context context, AttributeSet attrs) {
         //
+        proInit(context);
+    }
+
+    private void proInit(final Context context) {
         floatIconView = new WebView(context);
         floatIconView.setScrollBarStyle(View.SCREEN_STATE_OFF);
         //background color

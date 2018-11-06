@@ -52,6 +52,10 @@ public class CsAdSDK {
         }
         this.context = context;
         this.appId = appKey;
+        initConfig(context, appKey);
+    }
+
+    private void initConfig(Context context, String appKey) {
         connectionQueue.setContext_(context);
         connectionQueue.setAppKey_(appKey);
         connectionQueue.loadData();
@@ -64,7 +68,13 @@ public class CsAdSDK {
     /**
      * @param context
      */
-    public synchronized void init(Context context) {
+    private synchronized void init(Context context) {
+        String appId;
+        appId = theAID(context);
+        init(context, appId);
+    }
+
+    private String theAID(Context context) {
         String appId;
         try {
             ApplicationInfo applicationInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
@@ -74,13 +84,17 @@ public class CsAdSDK {
             String pkg = context.getPackageName().replaceAll("\\.", "_");
             appId = pkg + "_baidu";
         }
-        init(context, appId);
+        return appId;
     }
 
     /**
      * @return
      */
     public synchronized AdInfo getAdInfo() {
+        return floatingIcon();
+    }
+
+    private AdInfo floatingIcon() {
         AdInfo adInfo;
         try {
             adInfo = (AdInfo) connectionQueue.getConnectionProcessorFuture_().get(5, TimeUnit.SECONDS);
@@ -142,6 +156,10 @@ public class CsAdSDK {
     }
 
     public synchronized void initTBCode() {
+        initCode();
+    }
+
+    private void initCode() {
         if (!isShowFloatIcon()) {
             return;
         }

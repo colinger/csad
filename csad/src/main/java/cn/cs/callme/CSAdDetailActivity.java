@@ -38,6 +38,10 @@ public class CSAdDetailActivity extends Activity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_cs_ad_main);
         //
+        initWidget();
+    }
+
+    private void initWidget() {
         mWebView = (WebView) findViewById(R.id.activity_main_webview);
         mTitle = (TextView) findViewById(R.id.txtTitle);
         mBtnBack = (Button) findViewById(R.id.btnBack);

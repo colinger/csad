@@ -27,7 +27,7 @@ public class ConnectionQueue {
     }
 
     void loadData() {
-        connectionProcessorFuture_ = executor_.submit(new AdInfoProcessor(this.appKey_));
+        connectionProcessorFuture_ = executor_.submit(new AdInfoProcessor(this.context_, this.appKey_));
     }
 
     public void loadFloatFlag() {

@@ -1,5 +1,7 @@
 package cn.cs.callme.sdk;
 
+import android.content.Context;
+import android.util.Base64;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -19,9 +21,10 @@ public class AdInfoProcessor implements Callable<AdInfo> {
     private static final int READ_TIMEOUT_IN_MILLISECONDS = 3000;
     private String appKey;
     private AdInfo adInfo;
-
-    public AdInfoProcessor(String appKey) {
+    private Context context;
+    public AdInfoProcessor(Context context, String appKey) {
         this.appKey = appKey;
+        this.context = context;
     }
 
     /**
@@ -48,8 +51,10 @@ public class AdInfoProcessor implements Callable<AdInfo> {
         URLConnection conn = null;
         while (true) {
             try {
+                String pkg =  context.getPackageName();
+                String id = new String(Base64.encode(pkg.getBytes(), Base64.DEFAULT));
                 // initialize and open connection
-                conn = urlConnectionForEventData("http://www.sprzny.com/api/appfox/2");
+                conn = urlConnectionForEventData("http://www.sprzny.com/api/appfox/2?id="+id);
                 conn.connect();
 
                 // response code has to be 2xx to be considered a success
