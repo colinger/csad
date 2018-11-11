@@ -33,6 +33,9 @@ public class SplashAD {
     private boolean isClicked = false;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
+            if(skipView == null){
+                return;
+            }
             if(msg.what - 1 == 0){
                 skipView.setText("跳过");
             }else {
@@ -47,6 +50,9 @@ public class SplashAD {
         this.skipView = skipContainer;
         this.adListener = adListener;
         //访问请求
+        if(skipView != null){
+            skipView.setVisibility(View.INVISIBLE);
+        }
         load(appId, adListener, skipView);
     }
 
@@ -213,15 +219,19 @@ public class SplashAD {
                     @Override
                     public void onClick(View view) {
                         isClicked = true;
-                        Intent webView = new Intent(container.getContext(), CSAdDetailActivity.class);
-                        webView.putExtra("adUrl", adInfo.getUrl());
-                        webView.putExtra("targetClass", targetClass);
-                        container.getContext().startActivity(webView);
+                        Intent intent = new Intent(container.getContext(), CSAdDetailActivity.class);
+                        intent.putExtra("adUrl", adInfo.getUrl());
+                        intent.putExtra("targetClass", targetClass);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        container.getContext().startActivity(intent);
                     }
                 });
                 //
                 fetchAndShow(adInfo, adListener, container);
-
+                //
+                if(skipView != null){
+                    skipView.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

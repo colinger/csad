@@ -14,12 +14,11 @@
  	    android:layout_alignParentLeft="true"
 		android:layout_marginLeft="-2dp"
  	    android:layout_centerVertical="true"
- 	    android:drawableLeft="@drawable/back_sel"
+ 	    android:drawableLeft="@drawable/back_sel_1"
  	    android:background="@android:color/transparent"
  	    android:gravity="center_vertical"
  	    android:textColor="@android:color/white"
- 	    android:textSize="14.0sp"
- 	    android:text="返回"/>
+ 	    android:textSize="14.0sp"/>
     
     <TextView
         android:id="@+id/txtTitle"

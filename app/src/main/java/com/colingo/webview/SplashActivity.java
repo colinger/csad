@@ -29,6 +29,9 @@ public class SplashActivity extends Activity implements SplashAdListener {
         container = (ViewGroup) this.findViewById(R.id.splash_container);
         splashHolder = (ImageView) findViewById(R.id.splash_holder);
         skipText = (TextView) findViewById(R.id.skip_view);
+        /**
+         *
+         */
         new SplashAD(MainActivity.class, container, skipText, "com.zhinan.zhen", this);
     }
 
