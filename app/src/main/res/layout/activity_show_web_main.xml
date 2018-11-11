@@ -17,7 +17,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:onClick="returnBack"
-            android:src="@drawable/back_sel" />
+            android:src="@drawable/back_sel_n" />
 
         <TextView
             android:id="@+id/activity_main_webview_title"

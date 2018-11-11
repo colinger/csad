@@ -4,8 +4,8 @@
     android:layout_width="fill_parent"
     android:layout_height="50.0dp"
     android:layout_alignParentTop="true"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp" >
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp" >
     
     <Button
  	    android:id="@+id/btnBack"
@@ -14,7 +14,7 @@
  	    android:layout_alignParentLeft="true"
 		android:layout_marginLeft="-2dp"
  	    android:layout_centerVertical="true"
- 	    android:drawableLeft="@drawable/back_sel"
+ 	    android:drawableLeft="@drawable/back_sel_n"
  	    android:background="@android:color/transparent"
  	    android:gravity="center_vertical"
  	    android:textColor="@android:color/white"
