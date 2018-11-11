@@ -1,18 +1,23 @@
 package cn.cs.callme.sdk;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
+import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.RelativeLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -30,7 +35,7 @@ public class SplashAD {
     private ViewGroup container;
     private TextView skipView;
     private SplashAdListener adListener;
-    private WebView mWebView;
+    private CsImageView mWebView;
 
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
@@ -198,30 +203,19 @@ public class SplashAD {
             super.onPostExecute(adInfo);
             if (adInfo != null) {
                 //显示图片
-                mWebView = new WebView(container.getContext());
-                mWebView.getSettings().setJavaScriptEnabled(true);
-                mWebView.getSettings().setDomStorageEnabled(true);
-                mWebView.getSettings().setSupportMultipleWindows(true);
-                mWebView.getSettings().setLoadWithOverviewMode(true);
-                mWebView.getSettings().setBlockNetworkImage(false);
-                mWebView.getSettings().setUseWideViewPort(true);
-                mWebView.getSettings().setTextZoom(100);
-
-                String data = "<html><head><title></title><style>img{display: inline; height: 100%; width: 100%;}</style></head><body><div align=\"center\" margin=\"0px\"><a href=\""+adInfo.getUrl()+"\"><img src=\"" + adInfo.getPic() + "\" margin=\"0px\" /></a></div></body></html>";//设置图片位于webview的中间位置
-                mWebView.loadDataWithBaseURL(null, data, "text/html", "utf-8", null);
-
+                mWebView = new CsImageView(container.getContext());
+                mWebView.setImageURL(adInfo.getPic());
+                mWebView.setScaleType(ImageView.ScaleType.FIT_XY);
+                mWebView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 //
-//                mWebView.getLayoutParams().height= ViewGroup.LayoutParams.MATCH_PARENT;
-//                mWebView.getLayoutParams().width= ViewGroup.LayoutParams.MATCH_PARENT;
                 container.addView(mWebView);
-                mWebView.setWebViewClient(new WebViewClient(){
+                mWebView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean shouldOverrideUrlLoading(WebView  view, String  url){
+                    public void onClick(View view) {
                         Intent webView = new Intent(container.getContext(), CSAdDetailActivity.class);
                         webView.putExtra("adUrl", adInfo.getUrl());
                         webView.putExtra("targetClass", targetClass);
                         container.getContext().startActivity(webView);
-                        return true;
                     }
                 });
                 //
