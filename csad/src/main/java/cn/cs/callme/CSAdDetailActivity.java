@@ -25,12 +25,13 @@ import android.widget.TextView;
 import java.io.File;
 
 public class CSAdDetailActivity extends Activity {
-    private WebView        mWebView;
-    private String         currentUrl = "";
+    private WebView mWebView;
+    private String currentUrl = "";
     private RelativeLayout mScrollToolBar;
-    private TextView       mTitle;
-    private Button         mBtnBack;
-    private String         AD_URL     = "http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__";
+    private TextView mTitle;
+    private Button mBtnBack;
+    private String AD_URL = "http://m.bianxianmao.com?appKey=3dfe434877e44560afb56068d1cb91f2&appType=app&appEntrance=5&business=money&i=__IMEI__&f=__IDFA__";
+    private Class targetClass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,12 @@ public class CSAdDetailActivity extends Activity {
         setContentView(R.layout.activity_cs_ad_main);
         //
         initWidget();
+
+        try {
+            targetClass = (Class)getIntent().getExtras().getSerializable("targetClass");
+        } catch (Exception e) {
+            targetClass = null;
+        }
     }
 
     private void initWidget() {
@@ -93,7 +100,11 @@ public class CSAdDetailActivity extends Activity {
         mBtnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    finish();
+                finish();
+                if (targetClass != null) {
+                    Intent main = new Intent(CSAdDetailActivity.this, targetClass);
+                    startActivity(main);
+                }
             }
         });
     }

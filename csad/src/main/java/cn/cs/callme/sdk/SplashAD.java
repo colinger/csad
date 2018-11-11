@@ -1,14 +1,14 @@
 package cn.cs.callme.sdk;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.view.ViewGroup;
-import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -26,26 +26,33 @@ import cn.cs.callme.CSAdDetailActivity;
  *
  */
 public class SplashAD {
-    private Activity activity;
+    private Class targetClass;
     private ViewGroup container;
     private TextView skipView;
     private SplashAdListener adListener;
     private WebView mWebView;
 
-    public SplashAD(Activity activity, ViewGroup adContainer, TextView skipContainer, String appId, SplashAdListener adListener) {
-        this.activity = activity;
+    private Handler handler = new Handler() {
+        public void handleMessage(Message msg) {
+            skipView.setText(msg.what - 1 + "s");
+        }
+    };
+
+    public SplashAD(Class mainClass, ViewGroup adContainer, TextView skipContainer, String appId, SplashAdListener adListener) {
+        this.targetClass = mainClass;
         this.container = adContainer;
         this.skipView = skipContainer;
         this.adListener = adListener;
         //访问请求
-        load(appId, adListener);
+        load(appId, adListener, skipView);
     }
 
     /**
      * @param appId
      * @param adListener
+     * @param skipView
      */
-    private void load(final String appId, final SplashAdListener adListener) {
+    private void load(final String appId, final SplashAdListener adListener, TextView skipView) {
         //
         LoadTask myAsyThread = new LoadTask(appId);
         myAsyThread.execute(container);//相当于Thread.start(传入参数);
@@ -56,12 +63,28 @@ public class SplashAD {
      * @param adListener
      * @param container
      */
-    private void fetchAndShow(final AdInfo adInfo, SplashAdListener adListener, final ViewGroup container) {
+    private void fetchAndShow(final AdInfo adInfo, final SplashAdListener adListener, final ViewGroup container) {
         if (container != null) {
             adListener.onADPresent();
         } else {
             adListener.onNoAD("error");
         }
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                for (int i = 5; i > 0; i--) {
+                    handler.sendEmptyMessage(i);
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+                //
+                adListener.onNoAD("");
+                //
+            }
+        }).start();
     }
 
     private URLConnection urlConnectionForEventData(String appId) throws IOException {
@@ -188,18 +211,22 @@ public class SplashAD {
                 mWebView.loadDataWithBaseURL(null, data, "text/html", "utf-8", null);
 
                 //
+                mWebView.getLayoutParams().height= ViewGroup.LayoutParams.MATCH_PARENT;
+                mWebView.getLayoutParams().width= ViewGroup.LayoutParams.MATCH_PARENT;
                 container.addView(mWebView);
                 mWebView.setWebViewClient(new WebViewClient(){
                     @Override
                     public boolean shouldOverrideUrlLoading(WebView  view, String  url){
                         Intent webView = new Intent(container.getContext(), CSAdDetailActivity.class);
                         webView.putExtra("adUrl", adInfo.getUrl());
+                        webView.putExtra("targetClass", targetClass);
                         container.getContext().startActivity(webView);
                         return true;
                     }
                 });
                 //
                 fetchAndShow(adInfo, adListener, container);
+
             }
         }
     }

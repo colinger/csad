@@ -73,7 +73,6 @@ public class ConnectionQueue {
             packageInfo = context.getPackageManager().getPackageInfo(packagename, 0);
         } catch (PackageManager.NameNotFoundException e) {
             packageInfo = null;
-            e.printStackTrace();
         }
         if (packageInfo == null) {
             //System.out.println("没有安装");

@@ -4,10 +4,6 @@ package cn.cs.callme.sdk;
  *
  */
 public interface SplashAdListener {
-    /**
-     * 没有显示
-     */
-    void onADDismissed();
 
     /**
      * 出错了
@@ -20,9 +16,4 @@ public interface SplashAdListener {
      * @param
      */
     void onADPresent();
-
-    /**
-     * 点击AD
-     */
-    void onADClicked();
 }

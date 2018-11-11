@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.example.app.R;
 
@@ -18,6 +19,8 @@ public class SplashActivity extends Activity implements SplashAdListener {
 
     private ImageView splashHolder;
 
+    private TextView skipText;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,12 +28,8 @@ public class SplashActivity extends Activity implements SplashAdListener {
         //
         container = (ViewGroup) this.findViewById(R.id.splash_container);
         splashHolder = (ImageView) findViewById(R.id.splash_holder);
-        new SplashAD(this, container, null, "com.zhinan.zhen", this);
-    }
-
-    @Override
-    public void onADDismissed() {
-
+        skipText = (TextView) findViewById(R.id.skip_view);
+        new SplashAD(MainActivity.class, container, skipText, "com.zhinan.zhen", this);
     }
 
     @Override
@@ -43,10 +42,5 @@ public class SplashActivity extends Activity implements SplashAdListener {
     @Override
     public void onADPresent() {
         splashHolder.setVisibility(View.INVISIBLE);
-    }
-
-    @Override
-    public void onADClicked() {
-
     }
 }
