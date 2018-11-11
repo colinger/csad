@@ -207,12 +207,12 @@ public class SplashAD {
                 mWebView.getSettings().setUseWideViewPort(true);
                 mWebView.getSettings().setTextZoom(100);
 
-                String data = "<html><head><title></title><meta name=\"viewport\" initial-scale=\"1.0\" /><style>img{display: inline; height: auto; max-width: 100%;}</style></head><body><div align=\"center\" margin=\"0px\"><a href=\""+adInfo.getUrl()+"\"><img src=\"" + adInfo.getPic() + "\" margin=\"0px\" /></a></div></body></html>";//设置图片位于webview的中间位置
+                String data = "<html><head><title></title><style>img{display: inline; height: 100%; width: 100%;}</style></head><body><div align=\"center\" margin=\"0px\"><a href=\""+adInfo.getUrl()+"\"><img src=\"" + adInfo.getPic() + "\" margin=\"0px\" /></a></div></body></html>";//设置图片位于webview的中间位置
                 mWebView.loadDataWithBaseURL(null, data, "text/html", "utf-8", null);
 
                 //
-                mWebView.getLayoutParams().height= ViewGroup.LayoutParams.MATCH_PARENT;
-                mWebView.getLayoutParams().width= ViewGroup.LayoutParams.MATCH_PARENT;
+//                mWebView.getLayoutParams().height= ViewGroup.LayoutParams.MATCH_PARENT;
+//                mWebView.getLayoutParams().width= ViewGroup.LayoutParams.MATCH_PARENT;
                 container.addView(mWebView);
                 mWebView.setWebViewClient(new WebViewClient(){
                     @Override
