@@ -26,16 +26,16 @@ android {
     }
     flavorDimensions "default"
     productFlavors {
-        baidu01 {dimension "default"}
-        t360 {dimension "default"}
-        wandoujia {dimension "default"}
-        yingyongbao {dimension "default"}
-        xiaomi {dimension "default"}
-        jinli {dimension "default"}
-        vivo {dimension "default"}
-        huawei {dimension "default"}
-        lianxiang {dimension "default"}
-        meizu {dimension "default"}
+        baidu01 { dimension "default" }
+        t360 { dimension "default" }
+        wandoujia { dimension "default" }
+        yingyongbao { dimension "default" }
+        xiaomi { dimension "default" }
+        jinli { dimension "default" }
+        vivo { dimension "default" }
+        huawei { dimension "default" }
+        lianxiang { dimension "default" }
+        meizu { dimension "default" }
     }
 
     productFlavors.all {
@@ -44,6 +44,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
     compile fileTree(include: ['*.jar'], dir: 'libs')
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
