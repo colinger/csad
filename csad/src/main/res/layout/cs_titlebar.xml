@@ -14,7 +14,7 @@
  	    android:layout_alignParentLeft="true"
 		android:layout_marginLeft="-2dp"
  	    android:layout_centerVertical="true"
- 	    android:drawableLeft="@drawable/back_sel_1"
+ 	    android:drawableLeft="@drawable/back_sel"
  	    android:background="@android:color/transparent"
  	    android:gravity="center_vertical"
  	    android:textColor="@android:color/white"
