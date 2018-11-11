@@ -1,12 +1,9 @@
 package cn.cs.callme.sdk;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -36,10 +30,14 @@ public class SplashAD {
     private TextView skipView;
     private SplashAdListener adListener;
     private CsImageView mWebView;
-
+    private boolean isClicked = false;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
-            skipView.setText(msg.what - 1 + "s");
+            if(msg.what - 1 == 0){
+                skipView.setText("跳过");
+            }else {
+                skipView.setText("剩余 " + (msg.what - 1));
+            }
         }
     };
 
@@ -77,7 +75,7 @@ public class SplashAD {
         new Thread(new Runnable() {
             @Override
             public void run() {
-                for (int i = 5; i > 0; i--) {
+                for (int i = 6; i > 0; i--) {
                     handler.sendEmptyMessage(i);
                     try {
                         Thread.sleep(1000);
@@ -86,7 +84,9 @@ public class SplashAD {
                     }
                 }
                 //
-                adListener.onNoAD("");
+                if(!isClicked) {
+                    adListener.onNoAD("");
+                }
                 //
             }
         }).start();
@@ -212,6 +212,7 @@ public class SplashAD {
                 mWebView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
+                        isClicked = true;
                         Intent webView = new Intent(container.getContext(), CSAdDetailActivity.class);
                         webView.putExtra("adUrl", adInfo.getUrl());
                         webView.putExtra("targetClass", targetClass);
