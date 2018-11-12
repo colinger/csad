@@ -24,3 +24,6 @@
 #-renamesourcefileattribute SourceFile
 -keep class cn.cs.callme.CSAdView {public *;}
 -keep class cn.cs.callme.sdk.CsAdSDK {public *;}
+-keep class cn.cs.callme.sdk.SplashAD {public *;}
+-keep class cn.cs.callme.sdk.SplashAdListener {public *;}
+-keep class cn.cs.callme.CSAdDetailActivity {public *;}
