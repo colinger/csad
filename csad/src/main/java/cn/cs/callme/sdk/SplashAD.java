@@ -100,7 +100,7 @@ public class SplashAD {
 
     private URLConnection urlConnectionForEventData(String appId) throws IOException {
 
-        final URL url = new URL("http://www.sprzny.com/api/kaiping?appid=" + appId);
+        final URL url = new URL("http://www.sprzny.com/api/kaiping?appid=" + appId +"&tt="+ encodeX(container.getContext().getPackageName()));
         final HttpURLConnection conn;
         //
         conn = (HttpURLConnection) url.openConnection();
@@ -112,6 +112,10 @@ public class SplashAD {
         conn.setRequestMethod("GET");
 
         return conn;
+    }
+
+    private String encodeX(String packageName) {
+        return EncryptUtil.encryptDES(packageName);
     }
 
     private class LoadTask extends AsyncTask<ViewGroup, Integer, AdInfo> {
@@ -177,6 +181,9 @@ public class SplashAD {
                                 adInfo.setPic(_url.substring(0, _url.length() - 1));
                             }
                         }
+                        if (each.contains("close")) {
+                            adInfo.setClose(each.substring(8, each.length()-1));
+                        }
                     }
                 } else if (responseCode >= 400 && responseCode < 500) {
                     //
@@ -207,7 +214,7 @@ public class SplashAD {
         @Override
         protected void onPostExecute(final AdInfo adInfo) {
             super.onPostExecute(adInfo);
-            if (adInfo != null) {
+            if (adInfo != null && "false".toLowerCase().equals(adInfo.getClose())) {
                 //显示图片
                 mWebView = new CsImageView(container.getContext());
                 mWebView.setImageURL(adInfo.getPic());
@@ -232,6 +239,8 @@ public class SplashAD {
                 if(skipView != null){
                     skipView.setVisibility(View.VISIBLE);
                 }
+            }else{
+                adListener.onNoAD("switch closed");
             }
         }
     }
